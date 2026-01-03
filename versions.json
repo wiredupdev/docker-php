@@ -1,0 +1,34 @@
+[
+  {
+    "tag": "wiredupdev/php-cli-8.3-alpine",
+    "path": "8.3-alpine/cli",
+    "version": "2026.1.1",
+    "stages": ["dev"],
+    "build": true,
+    "push": true
+  },
+  {
+    "tag": "wiredupdev/php-fpm-8.3-alpine",
+    "path": "8.3-alpine/fpm",
+    "version": "2026.1.1",
+    "stages": ["dev", "prod"],
+    "build": true,
+    "push": true
+  },
+  {
+    "tag": "wiredupdev/php-cli-8.4-alpine",
+    "path": "8.4-alpine/cli",
+    "version": "2026.1.1",
+    "stages": ["dev", "prod"],
+    "build": true,
+    "push": true
+  },
+  {
+    "tag": "wiredupdev/php-fpm-8.4-alpine",
+    "path": "8.4-alpine/fpm",
+    "version": "2026.1.1",
+    "stages": ["dev", "prod"],
+    "build": true,
+    "push": true
+  }
+]

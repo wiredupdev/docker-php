@@ -1,7 +1,7 @@
-FROM php:8.4-fpm-alpine as Base
+FROM php:8.4-fpm-alpine AS base
 
 RUN apk update && apk upgrade --no-cache \
-    && apk add  icu   libzip libxml2  zip  bzip2  libgd  libpng libjpeg-turbo libwebp tiff freetype libpq libxslt \
+    && apk add icu libzip libxml2 zip bzip2 libgd libpng libjpeg-turbo libwebp tiff freetype libpq libxslt \
     && apk add --no-cache --virtual build-deps $PHPIZE_DEPS   \
     g++ \
     autoconf \
@@ -21,7 +21,7 @@ RUN apk update && apk upgrade --no-cache \
     libxslt-dev \
    && apk add --update --no-cache linux-headers \
    && pecl install  ds redis \
-   && docker-php-ext-enable xdebug ds redis \
+   && docker-php-ext-enable ds redis \
    && docker-php-ext-configure intl \
    && docker-php-ext-configure zip \
    && docker-php-ext-configure pgsql --with-pgsql=/usr/local/pgsql \
@@ -29,22 +29,21 @@ RUN apk update && apk upgrade --no-cache \
    && docker-php-ext-configure gd  --with-freetype=/usr/include/ --with-jpeg=/usr/include/  --with-webp=/usr/include/  \
    && docker-php-ext-install -j$(nproc) gd \
    && docker-php-ext-install  intl bz2 exif zip bcmath mysqli pgsql pdo pdo_pgsql pdo_mysql soap sockets xsl \
-   && apk del -f build-deps \
+   && apk del -f build-deps
 
 WORKDIR /var/www/html
 
-FROM Base as Dev
+FROM base AS dev
 
-RUN pecl install xdebug
+RUN apk add --no-cache --virtual build-dev-deps autoconf g++ make \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && apk del -f  build-dev-deps
 
 COPY etc/php-ext-xdebug.ini  /usr/local/etc/php/conf.d/php-ext-xdebug.ini
 
-COPY composer-installater.sh /composer-installation.sh
-
-RUN chmod +x tool/composer-installation.sh && /composer-installation.sh && rm /composer-installation.sh
-
-CMD ["composer", "self-update", "clear-cache"]
-
-FROM Base as  Prod
+FROM base AS  prod
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+USER www-data
