@@ -1,7 +1,7 @@
 [
   {
     "namespace": "wiredupdev",
-    "name": "php-cli-8.3-alpine",
+    "repository": "php-cli-8.3-alpine",
     "path": "8.3-alpine/cli",
     "tag": "2026.1.1",
     "stages": ["dev"],
@@ -10,7 +10,7 @@
   },
   {
     "namespace": "wiredupdev",
-    "name": "php-fpm-8.3-alpine",
+    "repository": "php-fpm-8.3-alpine",
     "path": "8.3-alpine/fpm",
     "tag": "2026.1.1",
     "stages": ["dev", "prod"],
@@ -19,7 +19,7 @@
   },
   {
     "namespace": "wiredupdev",
-    "name": "php-cli-8.4-alpine",
+    "repository": "php-cli-8.4-alpine",
     "path": "8.4-alpine/cli",
     "tag": "2026.1.1",
     "stages": ["dev", "prod"],
@@ -28,7 +28,7 @@
   },
   {
     "namespace": "wiredupdev",
-    "name": "php-fpm-8.4-alpine",
+    "repository": "php-fpm-8.4-alpine",
     "path": "8.4-alpine/fpm",
     "tag": "2026.1.1",
     "stages": ["dev", "prod"],

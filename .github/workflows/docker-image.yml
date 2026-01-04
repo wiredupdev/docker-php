@@ -15,16 +15,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: "Build images"
+      - name: "Build and Push"
         run: |
-          buildExpr='map(select(.build == true)).[] | .stages[] as $stage  | "docker build  --no-cache --target \($stage) -t \(.namespace)/\(.name):\(.tag)-\($stage|ascii_downcase) ./\(.path)" | split("\n") | .[]';
-          jq -r "$buildExpr"  versions.json | while read -r image; do
-           $($image)
-          done
-      - name: "Push Images"
-        run: |
-          pushExpr='map(select(.build == true and .push == true)).[]  | .stages[] as $stage | "docker push \(.namespace)/\(.name):\(.tag)-\($stage|ascii_downcase) " | split("\n") | .[]'
-          jq -r "$pushExpr" versions.json | while read -r image; do
-          $($image)
-          done
-
+          chmod +x ./versioning.sh
+          ./versioning.sh
