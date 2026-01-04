@@ -5,8 +5,8 @@
     "path": "8.3-alpine/cli",
     "tag": "2026.1.1",
     "stages": ["dev"],
-    "build": true,
-    "push": true
+    "build": false,
+    "push": false
   },
   {
     "namespace": "wiredupdev",
@@ -14,8 +14,8 @@
     "path": "8.3-alpine/fpm",
     "tag": "2026.1.1",
     "stages": ["dev", "prod"],
-    "build": false,
-    "push": false
+    "build": true,
+    "push": true
   },
   {
     "namespace": "wiredupdev",
@@ -23,8 +23,8 @@
     "path": "8.4-alpine/cli",
     "tag": "2026.1.1",
     "stages": ["dev", "prod"],
-    "build": false,
-    "push": false
+    "build": true,
+    "push": true
   },
   {
     "namespace": "wiredupdev",
@@ -32,7 +32,7 @@
     "path": "8.4-alpine/fpm",
     "tag": "2026.1.1",
     "stages": ["dev", "prod"],
-    "build": false,
-    "push": false
+    "build": true,
+    "push": true
   }
 ]
