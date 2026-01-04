@@ -19,14 +19,18 @@ jobs:
         uses: actions/checkout@v4
       - name: "Build images"
         run: |
-          buildExpr='map(select(.build == true)).[] | .stages[] as $stage  | "docker build  --no-cache --target \($stage) -t \(.namespace)/\(.repository):\(.tag)-\($stage|ascii_downcase) ./\(.path)" | split("\n") | .[]';
-          jq -r "$buildExpr"  versions.json | while read -r image; do
-           $($image)
-          done
+          jq -r 'map(select(.build == true)).[]
+              | .stages[] as $stage
+              | "docker build  --no-cache --target \($stage) -t \(.namespace)/\(.repository):\(.tag)-\($stage|ascii_downcase) ./\(.path) "
+              | split("\n") | .[]'  versions.json | while read -r image; do
+              $("$image")
+              done
       - name: "Push Images"
         run: |
-          pushExpr='map(select(.build == true and .push == true)).[]  | .stages[] as $stage | "docker push \(.namespace)/\(.repository):\(.tag)-\($stage|ascii_downcase) " | split("\n") | .[]'
-          jq -r "$pushExpr" versions.json | while read -r image; do
-          $($image)
+          jq -r 'map(select(.build == true and .push == true)).[]
+              | .stages[] as $stage
+              | "docker push \(.namespace)/\(.repository):\(.tag)-\($stage|ascii_downcase)"
+              | split("\n") | .[]' versions.json | while read -r image; do
+            $("$image")
           done
 
