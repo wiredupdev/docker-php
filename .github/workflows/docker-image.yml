@@ -25,4 +25,9 @@ jobs:
       - name: "Push images"
         if: success()
         run: |
-          docker images
+          jq -r 'map(select(.build == true and .push == true)).[]
+            | .stages[] as $stage
+            | "docker push \(.namespace)/\(.repository):\(.tag)-\($stage|ascii_downcase)"
+            | split("\n") | .[]' versions.json | while read -r image; do
+            eval $image; 
+          done
