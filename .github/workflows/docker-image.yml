@@ -3,7 +3,7 @@ on:
   push:
     branches: [ "master" ]
 jobs:
-  build_and_push:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
@@ -14,4 +14,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: "Build images"
-        run: jq --version
+        if: success()
+        run: |
+          jq -r 'map(select(.build == true)).[]
+                | .stages[] as $stage
+                | "docker build  --no-cache --target \($stage) -t \(.namespace)/\(.repository):\(.tag)-\($stage|ascii_downcase) ./\(.path) "
+                | split("\n") | .[]'  versions.json | while read -r image; do
+                $($image);
+          done
+      - name: "Push images"
+        if: success()
+        run: |
+          jq -r 'map(select(.build == true and .push == true)).[]
+            | .stages[] as $stage
+            | "docker push \(.namespace)/\(.repository):\(.tag)-\($stage|ascii_downcase)"
+            | split("\n") | .[]' versions.json | while read -r image; do
+            $($image);
+          done
