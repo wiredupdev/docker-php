@@ -46,8 +46,6 @@ COPY composer-installater.sh /composer-installation.sh
 
 RUN chmod +x /composer-installation.sh && /composer-installation.sh && rm /composer-installation.sh
 
-CMD ["composer", "self-update", "clear-cache"]
-
 FROM base AS  prod
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"

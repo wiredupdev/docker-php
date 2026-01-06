@@ -5,8 +5,8 @@
     "path": "8.3-alpine/cli",
     "tag": "2026.1.1",
     "stages": ["dev"],
-    "build": false,
-    "push": false
+    "build": true,
+    "push": true
   },
   {
     "namespace": "wiredupdev",
@@ -30,6 +30,24 @@
     "namespace": "wiredupdev",
     "repository": "php-fpm-8.4-alpine",
     "path": "8.4-alpine/fpm",
+    "tag": "2026.1.1",
+    "stages": ["dev", "prod"],
+    "build": true,
+    "push": true
+  },
+  {
+    "namespace": "wiredupdev",
+    "repository": "php-fpm-8.4-amazonlinux",
+    "path": "8.4-amazonlinux/fpm",
+    "tag": "2026.1.1",
+    "stages": ["dev", "prod"],
+    "build": true,
+    "push": true
+  },
+  {
+    "namespace": "wiredupdev",
+    "repository": "php-cli-8.4-amazonlinux",
+    "path": "8.4-amazonlinux/cli",
     "tag": "2026.1.1",
     "stages": ["dev", "prod"],
     "build": true,
