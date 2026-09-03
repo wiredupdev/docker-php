@@ -4,7 +4,7 @@ ARG SAPI="cli"
 FROM amazonlinux:2023 AS base_cli
 
 RUN dnf update -y \
-    && dnf install -y  php-devel php-pear gcc make php${PHP_VERSION} php${PHP_VERSION}-${SAPI} php${PHP_VERSION}-mbstring php${PHP_VERSION}-intl php${PHP_VERSION}-pdo php${PHP_VERSION}-zip php${PHP_VERSION}-sodium php${PHP_VERSION}-opcache php${PHP_VERSION}-mysqlnd  php${PHP_VERSION}-soap \
+    && dnf install -y  php-devel php-pear gcc make php${PHP_VERSION} php${PHP_VERSION}-cli php${PHP_VERSION}-mbstring php${PHP_VERSION}-intl php${PHP_VERSION}-pdo php${PHP_VERSION}-zip php${PHP_VERSION}-sodium php${PHP_VERSION}-opcache php${PHP_VERSION}-mysqlnd  php${PHP_VERSION}-soap \
     && pecl install redis \
     && dnf remove -y  php-devel php-pear gcc make  \
     && dnf clean all
@@ -32,7 +32,7 @@ RUN chmod +x /composer-installation.sh && /composer-installation.sh && rm /compo
 
 CMD ["php", "-a"]
 
-FROM base_cli AS cli_prod
+FROM base_cli AS prod_cli
 
 USER www-data
 
@@ -68,6 +68,6 @@ COPY etc/php-ext-xdebug.ini /etc/php.d/xdebug.ini
 
 COPY composer-installater.sh /composer-installation.sh
 
-FROM base AS fpm_prod
+FROM base AS prod_fpm
 
 USER www-data
