@@ -1,4 +1,5 @@
-FROM php:8.4-cli-alpine AS base
+ARG PHP_VERSION="8.3-cli"
+FROM php:${PHP_VERSION}-alpine AS base
 
 RUN apk update && apk upgrade --no-cache \
     && apk add icu libzip libxml2 zip bzip2 libgd libpng libjpeg-turbo libwebp tiff freetype libpq libxslt \
@@ -44,7 +45,7 @@ COPY etc/php-ext-xdebug.ini  /usr/local/etc/php/conf.d/php-ext-xdebug.ini
 
 COPY composer-installater.sh /composer-installation.sh
 
-RUN chmod +x /composer-installation.sh && /composer-installation.sh && rm /composer-installation.sh
+RUN chmod +x /composer-installation.sh && /composer-installation.sh  && rm /composer-installation.sh
 
 FROM base AS  prod
 
