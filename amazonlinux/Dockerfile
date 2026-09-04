@@ -16,7 +16,7 @@ RUN adduser -u 1090 www-data \
 
 WORKDIR /var/www/html
 
-FROM base AS dev_cli
+FROM base_cli AS dev_cli
 
 RUN dnf update -y \
     && dnf install -y php-devel php-pear autoconf automake libtool make \
