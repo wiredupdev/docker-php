@@ -3,7 +3,7 @@ ARG SAPI="cli"
 FROM php:${PHP_VERSION}-${SAPI}-alpine AS base
 
 RUN apk update && apk upgrade --no-cache \
-    && apk add icu libzip libxml2 zip bzip2 libgd libpng libjpeg-turbo libwebp tiff freetype libpq libxslt librabbitmq-dev \
+    && apk add icu libzip libxml2 zip bzip2 libgd libpng libjpeg-turbo libwebp tiff freetype libpq libxslt \
     && apk add --no-cache --virtual build-deps $PHPIZE_DEPS   \
     g++ \
     autoconf \
