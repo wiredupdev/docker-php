@@ -68,6 +68,6 @@ COPY etc/php-ext-xdebug.ini /etc/php.d/xdebug.ini
 
 COPY composer-installater.sh /composer-installation.sh
 
-FROM base AS prod_fpm
+FROM base_fpm AS prod_fpm
 
 USER www-data
