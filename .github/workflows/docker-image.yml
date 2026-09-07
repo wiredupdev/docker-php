@@ -1,7 +1,8 @@
 name: "Docker build and push"
 on:
   push:
-    branches: [ "master" ]
+    paths:
+      - php/**
 jobs:
   build_push_images:
     runs-on: ubuntu-latest
