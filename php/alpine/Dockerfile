@@ -1,6 +1,6 @@
 ARG PHP_VERSION="8.3"
-ARG SAPI="cli"
-FROM php:${PHP_VERSION}-${SAPI}-alpine AS base
+ARG PHP_SAPI="cli"
+FROM php:${PHP_VERSION}-${PHP_SAPI}-alpine AS base
 
 RUN apk update && apk upgrade --no-cache \
     && apk add icu libzip libxml2 zip bzip2 libgd libpng libjpeg-turbo libwebp tiff freetype libpq libxslt \
@@ -23,7 +23,7 @@ RUN apk update && apk upgrade --no-cache \
     libxslt-dev \
     rabbitmq-c-dev \
    && apk add --update --no-cache linux-headers \
-   && pecl install amqp  ds redis \
+   && pecl install amqp ds redis \
    && docker-php-ext-enable ds redis amqp \
    && docker-php-ext-configure intl \
    && docker-php-ext-configure zip \
